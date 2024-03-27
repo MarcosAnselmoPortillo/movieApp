@@ -10,4 +10,6 @@ genreRouter.post("/", validateGenreData, genreController.createGenre);
 
 genreRouter.put("/:id", genreController.updateGenre);
 
+genreRouter.delete("/:id", genreController.deleteGenre);
+
 module.exports = genreRouter;

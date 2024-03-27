@@ -23,7 +23,17 @@ module.exports = {
       throw new Error("Could not update genre");
     }
   },
-  //   deleteGenre: async (id) => {
-  //     return await Genre.deleteOne({_id : id})
-  //   }
+  async deleteGenre(id) {
+    try {
+      const deletedGenre = await Genre.findByIdAndDelete(id);
+      return deletedGenre;
+    } catch (error) {
+      // Handle specific errors if needed
+      if (error.name === "CastError") {
+        throw new Error("Invalid genre ID format");
+      } else {
+        throw new Error("Could not delete genre");
+      }
+    }
+  },
 };

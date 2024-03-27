@@ -39,17 +39,17 @@ module.exports = {
       return res.status(500).json({ message: "Internal server error" });
     }
   },
-  // deleteGenre:(req,res)=> {
-  //   let id=parseInt(req.params.id);
-  //   genreService.deleteGenre(id)
-  //       .then((deleted)=>{
-  //           if(!deleted){
-  //               return res.status(404).json({ message: `The genre with the id "${id}" doesn't exist` })
-  //           }
-  //           res.status(204).json();
-  //       }).catch(e=>{
-  //           console.log(e);
-  //           res.status(500).json({ message: 'Error deleting the genre' });
-  //       })
-  // }
+  async deleteGenre(req, res) {
+    const id = req.params.id;
+    try {
+      const deletedGenre = await genreService.deleteGenre(id);
+      if (!deletedGenre) {
+        return res.status(404).json({ message: `Genre with id ${id} not found` });
+      }
+      return res.status(200).json({ message: 'Genre deleted successfully' });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Internal server error' });
+    }
+  },
 };
